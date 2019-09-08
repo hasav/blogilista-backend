@@ -1,4 +1,6 @@
-json server
-nodemon
 eslint
-mongodb
+dotenv
+pipeline
+päätä mongossa teetkö uudet klusterin
+tee toimiva post rest
+täytä kantaa jollain
