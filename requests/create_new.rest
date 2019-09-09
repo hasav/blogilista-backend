@@ -2,8 +2,8 @@ post http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Karon retki",
-    "author": "Karoliina",
-    "url": "www.pup.fi",
-    "likes": 6
+    "title": "Villen ja Karon retki",
+    "author": "Karoliina ja Ville",
+    "url": "www.puppap.fi",
+    "likes": 10
 }
