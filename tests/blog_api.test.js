@@ -124,6 +124,58 @@ test('a blog without title or url get 400 bad request', async () => {
         .expect(400)
 
 })
+
+test('a blog can be deleted', async () => {
+    
+    const blogsAtStart = await Blog.find({})
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+    
+    const blogsAtEnd = await Blog.find({})
+    expect(blogsAtEnd.length).toBe(
+        blogsAtStart.length -1
+    )
+
+    const titles = blogsAtEnd.map(blog => blog.title)
+    expect(titles).not.toContain(blogToDelete.title)
+    
+})
+
+
+test('a blog can be edited', async () => {
+    
+    const blogsAtStart = await Blog.find({})
+    const blogToModify = blogsAtStart[0]
+
+    blogToModify.likes = 25
+
+    await api
+        .put(`/api/blogs/${blogToModify.id}`)
+        .send(blogToModify)
+        .expect(200)
+    
+    let blogsAtEnd = await Blog.find({})
+
+    const likes = blogsAtEnd.map(blog => blog.likes)
+    expect(likes).toContain(25)
+
+    blogToModify.author = 'Karoliina ja Ville Häsä'
+
+    await api 
+        .put(`/api/blogs/${blogToModify.id}`)
+        .send(blogToModify)
+        .expect(200)
+    
+    blogsAtEnd = await Blog.find({})
+
+    const authors = blogsAtEnd.map(blog => blog.author)
+    expect(authors).toContain('Karoliina ja Ville Häsä')
+})
+
+
 afterAll(() => {
     mongoose.connection.close()
 })
