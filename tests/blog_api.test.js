@@ -76,6 +76,29 @@ test('a blog can be added', async () => {
     expect(authors).toContain('Ville')
 
 })
+
+test('a blog with no likes given gets value 0 for likes', async () => {
+    
+    const newBlog = {
+        'title': 'Empty blog',
+        'author': 'Empty',
+        'url': 'empty url',
+        'likes': null
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+
+    const likes = response.body.map(r => r.likes)
+
+    expect(response.body.length).toBe(initialBlogs.length +1)
+    expect(likes).toContain(0)
+})
 afterAll(() => {
     mongoose.connection.close()
 })
