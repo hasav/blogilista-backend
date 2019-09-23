@@ -2,7 +2,7 @@ post http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Villen ja Karon retki islantiin",
+    "title": "Villen ja Karon retki islantiin osa 2",
     "author": "Karoliina ja Ville",
     "url": "www.puppapmau.fi",
     "likes": 10
