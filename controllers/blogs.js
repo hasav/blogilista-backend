@@ -8,7 +8,7 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.get('/info', (request, response) => {
     response.status(200).send({ infomessage: 'this is database api of blog app' })
 })
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', async (request, response, next) => {
     const body = request.body 
 
     const blog = new Blog({
@@ -18,8 +18,12 @@ blogsRouter.post('/', async (request, response) => {
         likes: body.likes || 0
     })
 
-    const savedBlog = await blog.save()
-    response.json(savedBlog.toJSON())
+    try {
+        const savedBlog = await blog.save()
+        response.json(savedBlog.toJSON())
+    } catch(exception) {
+        next(exception)
+    }
 
 })
 
