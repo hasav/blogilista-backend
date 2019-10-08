@@ -2,7 +2,9 @@ post http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Villen ja Karon retki islantiin osa 2",
-    "author": "Karoliina ja Ville",
-    "likes": 10
+    "title": "Maunon toinen kävelylenkki",
+    "author": "Karo ja Ville",
+    "url": "www.mel.fi",
+    "likes": 10,
+    "userId": "5d9cb3ed4ad59e0b044aca5a"
 }
