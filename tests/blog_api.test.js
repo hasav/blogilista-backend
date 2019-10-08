@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const api = supertest(app)
 
 const initialBlogs = [
@@ -173,6 +174,62 @@ test('a blog can be edited', async () => {
 
     const authors = blogsAtEnd.map(blog => blog.author)
     expect(authors).toContain('Karoliina ja Ville Häsä')
+})
+
+const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(u => u.toJSON())
+}
+
+describe('when there is initially one user at db', () => {
+    beforeEach(async () => {
+        await User.deleteMany({})
+        const user = new User({ username: 'first_user', name: 'Eino Ensimmäinen', password: 'sekret' })
+        await user.save()
+    })
+  
+    test('creation succeeds with a fresh username', async () => {
+        const usersAtStart = await usersInDb()
+  
+        const newUser = {
+            username: 'ville1',
+            name: 'Ville Testaaja',
+            password: 'testi',
+        }
+  
+        await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+  
+        const usersAtEnd = await usersInDb()
+        expect(usersAtEnd.length).toBe(usersAtStart.length + 1)
+  
+        const usernames = usersAtEnd.map(u => u.username)
+        expect(usernames).toContain(newUser.username)
+    })
+
+    test('creation fails with proper statuscode and message if username already taken', async () => {
+        const usersAtStart = await usersInDb()
+    
+        const newUser = {
+            username: 'first_user',
+            name: 'Timo Toinen',
+            password: 'salainen',
+        }
+    
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+    
+        expect(result.body.error).toContain('`username` to be unique')
+    
+        const usersAtEnd = await usersInDb()
+        expect(usersAtEnd.length).toBe(usersAtStart.length)
+    })
 })
 
 
