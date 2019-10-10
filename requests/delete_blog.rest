@@ -1,10 +1,2 @@
-post http://localhost:3003/api/blogs
-Content-Type: application/json
+delete http://localhost:3003/api/blogs/5d9ee6cf8d9f96077093fd90
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBvaXN0ZXR0dWJsb2dpIiwiaWQiOiI1ZDllZTY3ODVmZTQ1OTE5ZjAyMjc3ZDUiLCJpYXQiOjE1NzA2OTQ4MjZ9.hAdqXP_gzLB-0fl9QoaUlprD3Vpj4SG1r4bbUl8vmtU
-
-{
-    "title": "Tämä blogi poistetaan heti",
-    "author": "Pasi",
-    "url": "www.mel.fi",
-    "likes": 15
-}
