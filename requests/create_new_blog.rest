@@ -1,10 +1,11 @@
 post http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imthcm8iLCJpZCI6IjVkOWNiNGQ1NGFkNTllMGIwNDRhY2E1YyIsImlhdCI6MTU3MDY5MDMwOX0.6K4Bz2GgYTquglXak1FSPhDgpEFr6nYPTT7YnqJFTAI
+
 
 {
-    "title": "Maunon toinen kävelylenkki",
-    "author": "Karo ja Ville",
+    "title": "Villen ja Karon retki jenkkeihin",
+    "author": "Karo",
     "url": "www.mel.fi",
-    "likes": 10,
-    "userId": "5d9cb3ed4ad59e0b044aca5a"
+    "likes": 12
 }
