@@ -35,7 +35,8 @@ blogsRouter.post('/', async (request, response, next) => {
         const savedBlog = await blog.save()
         user.blogs = user.blogs.concat(savedBlog._id)
         await user.save()
-        response.json(savedBlog.toJSON())
+        const res = await Blog.findById(savedBlog._id).populate('user', {username: 1, name: 1})
+        response.json(res.toJSON())
     } catch (exception) {
         next(exception)
     }
@@ -81,6 +82,7 @@ blogsRouter.put('/:id', async (request, response, next) => {
 
     try {
         const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true})
+            .populate('user', {username: 1, name: 1})
         response.json(updatedBlog.toJSON())
     } catch (exception) {
         next(exception)
